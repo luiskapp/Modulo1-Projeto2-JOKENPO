@@ -1,88 +1,74 @@
 var prompt = require('prompt-sync')();
 
-let pedra = 'pedra';
-let papel = 'papel';
-let tesoura = 'tesoura';
-let rodadas = 0;
-let pontopc = 0;
-let ponto = 0 ;
-let resultado = 0;
-let escolha = '';
-let sim = 's';
-let nao = 'n';
+let pedra = 'pedra', papel = 'papel', tesoura = 'tesoura', rodadas = 0, pontopc = 0, ponto = 0 , resultado = 0, escolha = '', jogo = 0, escolhapc = 0, respc = '';
 
-console.log('Vamos jogar JOKENPO! É simple basta escolher entre pedra, papel e tesoura escolher quantas rodadas quer jogar.');
+console.log(`Vamos jogar JOKENPO! É simple basta escolher entre pedra, papel e tesoura e escolher quantas rodadas quer jogar.\n`);
+do{
+    jogo = 0
+    
+    rodadas = +prompt('Quantas rodadas dejesa jogar? ');
+    console.log(); 
 
-while(true){
-    rodadas += +prompt('Quantas rodadas dejesa jogar? ');
-    if (isNaN(rodadas)||rodadas < 1 ){
-        console.log('Número inválido.');
-} else {
-    break;
-} 
-} 
-
-while(escolha = true){
+    while (rodadas > 0){
         escolha = prompt('Escolha seu elemento: '); 
-        if(escolha == pedra){
-            break;
-        } else if(escolha == papel){
-            break;
-        } else if(escolha == tesoura){
-            break;
-        } else{
+        if(escolha != 'pedra' && escolha != 'papel' && escolha != 'tesoura'){
             console.log('Elemento inválido.');
         }
-}
+            escolhapc = Math.floor(Math.random() * 3 + 1);
+            if(escolhapc == 1){
+                respc = 'pedra';
+            } else if (escolhapc == 2){
+                respc = 'papel';
+            } else if(escolha == 3){
+                respc = 'tesoura';
+            }
+    console.clear();
+    
+    console.log('Você escolheu: '+escolha+', computador escolheu: '+respc);
+    console.log(); 
+        if(escolha == pedra && respc == tesoura){
+            console.log('Pedra ganha de tesoura!');
+            resultado = ponto++
+        } else if(escolha == pedra && respc == papel){
+            console.log('Papel ganha pedra!');
+            resultado = pontopc++;
+        } else if(escolha == papel && respc == tesoura){
+            console.log('Tesoura ganha papel!');
+            resultado = pontopc++;
+        } else if(escolha == papel && respc == pedra){
+            console.log('Papel ganha pedra!');
+            resultado = ponto++;
+        } else if(escolha == tesoura && respc == pedra){
+            console.log('Pedra ganha tesoura!'); 
+            resultado = pontopc++;
+        } else if(escolha == tesoura && respc == papel){
+            console.log('tesoura ganha papel!');
+            resultado = ponto++;
+        } else if (escolha == papel && respc == papel){
+            console.log('Ninguém pontua!');
+        } else if (escolha == pedra && respc == pedra){
+            console.log('Ninguém pontua!');
+        } else if (escolha == tesoura && respc == tesoura){
+            console.log('Ninguém pontua!');
+        }
+        rodadas -- 
+    }
+     
+    console.log('Você ganhou: '+ponto+' rodada(s) e PC ganhou: '+pontopc+' rodada(s)');
+    console.log(); 
+    if(ponto > pontopc){
+        console.log('Você ganhou, PC perdeu!');
+    } else if(pontopc > ponto){
+        console.log('PC ganhou, você perdeu!')
+    } else if(ponto == pontopc){
+        console.log('Ninguém ganhou!')
+    }
+    console.log(); 
+    replay = prompt('Deseja jogar novamente? ')
+    if(replay == 'sim'){
+        jogo = 1
+    } else{
+        console.log('Até a próxima!!');
+    }
 
-let escolhapc = 'papel';
-
-console.log ();
-console.log('Você escolheu: '+escolha+', computador escolheu: '+escolhapc);
-console.log ();
-
-if(escolha == pedra && escolhapc == tesoura){
-    console.log('Pedra ganha de tesoura!');
-    resultado = ponto++;
-} else if(escolha == pedra && escolhapc == papel){
-    console.log('Papel ganha pedra!');
-    resultado = pontopc++;
-} else if(escolha == papel && escolhapc == tesoura){
-    console.log('Tesoura ganha papel!');
-    resultado = pontopc++;
-} else if(escolha == papel && escolhapc == pedra){
-    console.log('Papel ganha pedra!');
-    resultado = ponto++;
-} else if(escolha == tesoura && escolhapc == pedra){
-    console.log('Pedra ganha tesoura!'); 
-    resultado = pontopc++;
-} else if(escolha == tesoura && escolhapc == papel){
-    console.log('tesoura ganha papel!');
-    resultado = ponto++;
-} else if (escolha == papel && escolhapc == papel){
-    console.log('Ninguém pontua!');
-} else if (escolha == pedra && escolhapc == pedra){
-    console.log('Ninguém pontua!');
-} else if (escolha == tesoura && escolhapc == tesoura){
-    console.log('Ninguém pontua!');
-}
-
-console.log ();
-console.log('Você jogou '+rodadas+' rodada(s) e ganhou: '+ponto+' e PC ganhou: '+pontopc);
-console.log ();
-
-if(ponto > pontopc){
-    console.log('Você ganhou, PC perdeu!');
-} else if(pontopc > ponto){
-    console.log('PC ganhou, você perdeu!')
-} else if(ponto == pontopc){
-    console.log('Ninguém ganhou!')
-}
-
-console.log(prompt('Deseja jogar novamente(S ou N)? '));
-
-if(sim == 's'){
-    rodadas;
-} else if(nao == 'n'){
-    console.log('Obrigado por jogar!');
-} 
+}while(jogo);
